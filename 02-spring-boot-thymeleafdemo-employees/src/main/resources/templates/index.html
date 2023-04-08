@@ -1,0 +1,77 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Getting Employee List</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Reference Bootstrap files -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- reference CSS file -->
+    <link rel="stylesheet" th:href="@{/css/demo.css}"/>
+</head>
+
+<body>
+<!-- <p th:text = "'Time on the server is ' + ${theData} " class="funny" /> -->
+
+<!--<tr th:each= "employee:${employeesList}">
+    <td th:text= "'Employee ID: '+ ${employee.id} ," />
+</tr>-->
+<thead>
+<tr
+        th:each="employee, iStat : ${theEmployee}"
+        th:style="${iStat.odd}? 'font-weight: bold;'"
+        th:alt-title="${iStat.even}? 'even' : 'odd'">
+    <td th:text="${employee.id}" />
+    <td th:text="${employee.firstName}" />
+    <td th:text="${employee.lastName}" />
+    <td th:text="${employee.email}" />
+    <br><br>
+</tr>
+</thead>
+
+<!--<a th:href="@{/addEmployee}" >Add Employee</a>-->
+
+
+<div th:switch="${theEmployee}">
+    <h2 th:case="null">No Employees yet!</h2>
+    <div th:case="*">
+        <h2>Employees</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="employee : ${theEmployee}">
+                <td th:text="${employee.firstName}"></td>
+                <td th:text="${employee.lastName}"></td>
+                <td th:text="${employee.email}"></td>
+                <td><a th:href="@{/edit/{id}(id=${employee.id})}">Edit</a></td>
+                <td><a th:href="@{/delete/{id}(id=${employee.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/signup">Add a new employee</a></p>
+</div>
+
+
+</body>
+
+</html>
+
